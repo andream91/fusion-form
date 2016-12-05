@@ -1,0 +1,34 @@
+{
+    "headers": [
+        "Gene pair symbols",
+        "Gene pair EnsIDs",
+        "Description",
+        "Counts of common mapping reads",
+        "Spanning pairs",	
+        "Spanning unique reads",	
+        "Longest anchor found",	
+        "Fusion finding method",	
+        "Fusion point for gene 1 (5end fusion partner)",	
+        "Fusion point for gene 2 (3end fusion partner)",	
+        "Fusion sequence",	
+        "Predicted effect",	
+        "Predicted fused transcripts",	
+        "Predicted fused proteins"
+    ],
+    "row": [
+        "<td md-cell><p>{{el.gene1.symbol}} - {{el.gene2.symbol}}</p></td>",
+        "<td md-cell><p>{{el.gene1.gene_id}} - {{el.gene2.gene_id}}</p></td>",
+        "<td md-cell><p>{{el.fusion.description}}</p></td>",
+        "<td md-cell><p>{{el.fusion.common_mapping_reads}}</p></td>",
+        "<td md-cell><p>{{el.fusion.spanning_pairs}}</p></td>",
+        "<td md-cell><p>{{el.fusion.spanning_unique_reads}}</p></td>",
+        "<td md-cell><p>{{el.fusion.longest_anchor_found}}</p></td>",
+        "<td md-cell><p>{{el.fusion.fusion_finding_method}}</p></td>",
+        "<td md-cell><p>{{el.fusion.fusion_point_1}}</p></td>",
+        "<td md-cell><p>{{el.fusion.fusion_point_2}}</p></td>",
+        "<td md-cell><p>{{el.fusion.fusion_sequence}}</p></td>",
+        "<td md-cell><p>{{el.fusion.predicted_effect}}</p></td>",
+        "<td md-cell><p>{{el.transcript1.transcript_id}}:{{el.transcript1.position}}/{{el.transcript2.transcript_id}}:{{el.transcript2.position}}</p></td>",
+        "<td md-cell><p>{{el.protein.id}}</p></td>"
+    ]
+}

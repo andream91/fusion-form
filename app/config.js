@@ -5,6 +5,7 @@ System.config({
     "app/*": "src/*.js",
     "users/*": "src/users/*.js",
     "form/*": "src/form/*.js",
+    "table/*": "src/table/*",
     "material-start/*": "src/*.js",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
@@ -16,12 +17,15 @@ System.config({
     "angular": "github:angular/bower-angular@1.5.8",
     "angular-animate": "github:angular/bower-angular-animate@1.5.8",
     "angular-aria": "github:angular/bower-angular-aria@1.5.8",
+    "angular-bind-html-compile": "github:incuna/angular-bind-html-compile@master",
     "angular-material": "github:angular/bower-material@master",
     "angular-messages": "github:angular/bower-angular-messages@1.5.8",
     "angular-mocks": "github:angular/bower-angular-mocks@1.5.8",
+    "angular-route": "github:angular/bower-angular-route@1.5.8",
     "css": "github:systemjs/plugin-css@0.1.29",
     "json": "github:systemjs/plugin-json@0.1.2",
     "text": "github:systemjs/plugin-text@0.0.4",
+    "md-data-table": "github:daniel-nagy/md-data-table@master",
     "traceur": "github:jmcriffey/bower-traceur@0.0.92",
     "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.92",
     "github:angular/bower-angular-animate@1.5.8": {
