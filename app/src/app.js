@@ -11,8 +11,9 @@ import 'md-data-table';
 import AppController from 'src/AppController';
 import Form from 'src/form/Form';
 import Table from 'src/table/Table';
+import Menu from 'src/menu/Menu';
 
-export default angular.module( 'starter-app', [ 'ngMaterial', 'ngRoute', Form.name, Table.name])
+export default angular.module( 'starter-app', [ 'ngMaterial', 'ngRoute', Form.name, Table.name, Menu.name])
   .config(($mdThemingProvider,$routeProvider) => {
     // Register the user `avatar` icons
     
@@ -24,14 +25,14 @@ export default angular.module( 'starter-app', [ 'ngMaterial', 'ngRoute', Form.na
       // Route definitions
     $routeProvider
     .when("/", {
-      templateUrl: "pages/form.html"
+      templateUrl: "pages/home.html"
     })
-    /*.when("/myFiles", {
-      templateUrl: "pages/myFiles.htm" 
+    .when("/form", {
+      templateUrl: "pages/form.html" 
     })
-    .when("/details/:filename", {
-      templateUrl: "pages/fileDetails.htm"
-    })*/
+    .when("/home", {
+      templateUrl: "pages/home.html" 
+    })
     .otherwise({
         redirectTo: '/'
     });

@@ -6,6 +6,7 @@ System.config({
     "users/*": "src/users/*.js",
     "form/*": "src/form/*.js",
     "table/*": "src/table/*",
+    "menu/*": "src/menu/*.js",
     "material-start/*": "src/*.js",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"

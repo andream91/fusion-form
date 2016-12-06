@@ -1,0 +1,14 @@
+{
+    "elements": [
+        {
+            "name": "Home",
+            "icon": "menu_icon",
+            "href": "#home"
+        },
+        {
+            "name": "Search",
+            "icon": "menu_icon",
+            "href": "#form"
+        }
+    ]
+}

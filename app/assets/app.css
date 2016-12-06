@@ -135,3 +135,7 @@ span.name {
 .toggable {
   display: none;
 }
+
+.banner {
+  max-height: 120px;
+}
