@@ -1,115 +1,238 @@
-<md-card>
+<md-card flex>
 	<!--<img src="card-image.png" class="md-card-image" alt="image caption">-->
-	<md-card-content>
-		<div class="navBardemoBasicUsage">
-			<md-content class="md-padding">
-				<md-content>
-					<md-tabs md-dynamic-height="" md-border-bottom="">
-						<md-tab label="chromosome" md-on-select="$ctrl.onTabChanges(1)">
-							<md-content layout-padding>
+	<md-card-content layout="row" flex>
+		<div class="navBardemoBasicUsage" flex>
+			<md-content class="md-padding" flex>
+				<md-tabs md-dynamic-height md-border-bottom="" flex>
+					<md-tab label="chromosome" md-on-select="$ctrl.onTabChanges(1)" flex layout-fill>
+						<md-content layout-padding>
+							<section layout="row" flex>
+							<md-input-container>
+								<label>Chromosome</label>
+								<input type="text" ng-model="$ctrl.chromosome.chromosome" placeholder="14">
+							</md-input-container>
+							<md-input-container>
+								<label>Cell line</label>
+								<input type="text" ng-model="$ctrl.chromosome.line" placeholder="CCLE_0384">
+							</md-input-container>
+							</section>
+							<section layout="row" flex>
+							<md-input-container>
+								<label>Start point</label>
+								<input type="text" ng-model="$ctrl.chromosome.start_point" placeholder="24292198">
+							</md-input-container>
+							<md-input-container>
+								<label>End point</label>
+								<input type="text" ng-model="$ctrl.chromosome.end_point" placeholder="24320214">
+							</md-input-container>
+							</section>
+							<section layout="row" flex>
 								<md-input-container>
-									<label>Chromosome</label>
-									<input type="text" ng-model="$ctrl.chromosome.chromosome" placeholder="14">
+									<label class="md-caption">Strand</label>
+									<br></br>
+									<md-radio-group ng-model="$ctrl.chromosome.strand" layout="row">
+										<md-radio-button value="+">+</md-radio-button>
+										<md-radio-button value="-">-</md-radio-button>
+										<md-radio-button value=".*">Any</md-radio-button>										
+									</md-radio-group>
+								</md-input-container>
+							</section>
+						</md-content>
+					</md-tab>
+					<md-tab label="gene" md-on-select="$ctrl.onTabChanges(2)" flex layout-fill>
+						<md-content class="md-padding">
+							<md-radio-group ng-model="$ctrl.gene.query_type" layout="row" ng-change="$ctrl.showSelectG()">
+								<md-radio-button value="single">Single gene</md-radio-button>
+								<md-radio-button value="pair">Pair</md-radio-button>
+							</md-radio-group>
+							<br>
+							<div id="toggle_single_gene" class="toggable">
+
+								<md-input-container>
+									<label>Symbol or EnsembleID</label>
+									<input type="text" ng-model="$ctrl.gene.input1" placeholder="DHRS1 or ENSG00000157379">
 								</md-input-container>
 								<md-input-container>
 									<label>Cell line</label>
-									<input type="text" ng-model="$ctrl.chromosome.line" placeholder="CCLE_0384">
+									<input type="text" ng-model="$ctrl.gene.line" placeholder="Insert cell line">
 								</md-input-container>
-								<br>
+								<div>
+									<md-input-container>
+										<label class="md-caption">Fusion partner</label>
+										<br></br>
+										<md-radio-group ng-model="$ctrl.gene.end" layout="row">
+											<md-radio-button value="5end">5' end</md-radio-button>
+											<md-radio-button value="3end">3' end</md-radio-button>
+											<md-radio-button value=".*">Any</md-radio-button>
+										</md-radio-group>
+								</md-input-container>
+								</div>
+							</div>
+							<div id="toggle_pair_gene" class="toggable">
 								<md-input-container>
-									<label>Start point</label>
-									<input type="text" ng-model="$ctrl.chromosome.start_point" placeholder="24292198">
+									<label>Symbol or EnsembleID 5'end gene</label>
+									<input type="text" ng-model="$ctrl.gene.input1" placeholder="DHRS1 or ENSG00000157379">
 								</md-input-container>
 								<md-input-container>
-									<label>End point</label>
-									<input type="text" ng-model="$ctrl.chromosome.end_point" placeholder="24320214">
+									<label>Symbol or EnsembleID 3'end gene</label>
+									<input type="text" ng-model="$ctrl.gene.input2" placeholder="RABGGTA or ENSG00000100949">
+								</md-input-container>
+								<md-input-container>
+									<label>Cell line</label>
+									<input type="text" ng-model="$ctrl.gene.line" placeholder="CCLE_384">
+								</md-input-container>
+							</div>
+						</md-content>
+					</md-tab>
+					<md-tab label="exon" md-on-select="$ctrl.onTabChanges(3)" flex layout-fill>
+						<md-content class="md-padding">
+							<md-radio-group ng-model="$ctrl.exon.query_type" layout="row" ng-change="$ctrl.showSelectE()">
+								<md-radio-button value="single">Single gene</md-radio-button>
+								<md-radio-button value="pair">Pair</md-radio-button>
+							</md-radio-group>
+							<br>
+							<div id="toggle_single_exon" class="toggable">
+								<md-input-container>
+									<label>Exon EnsembleID</label>
+									<input type="text" ng-model="$ctrl.exon.id1" placeholder="ENSE00001678826">
+								</md-input-container>
+								<md-input-container>
+									<label>Cell line</label>
+									<input type="text" ng-model="$ctrl.exon.line" placeholder="CCLE_384">
 								</md-input-container>
 								<div>
 									<md-input-container>
 										<label class="md-caption">Strand</label>
 										<br></br>
-										<md-radio-group ng-model="$ctrl.chromosome.strand" layout="row">
+										<md-radio-group ng-model="$ctrl.exon.strand1" layout="row">
 											<md-radio-button value="+">+</md-radio-button>
 											<md-radio-button value="-">-</md-radio-button>
 											<md-radio-button value=".*">Any</md-radio-button>
 										</md-radio-group>
 									</md-input-container>
 								</div>
-							</md-content>
-						</md-tab>
-						<md-tab label="gene" md-on-select="$ctrl.onTabChanges(2)">
+								<div>
+									<md-input-container>
+										<label class="md-caption">Fusion partner</label>
+										<br></br>
+										<md-radio-group ng-model="$ctrl.exon.end" layout="row">
+											<md-radio-button value="5end">5' end</md-radio-button>
+											<md-radio-button value="3end">3' end</md-radio-button>
+											<md-radio-button value=".*">Any</md-radio-button>
+										</md-radio-group>
+									</md-input-container>
+								</div>
+							</div>
+							<div id="toggle_pair_exon" class="toggable">
+								<md-input-container>
+									<label>EnsembleID 5' end Exon </label>
+									<input type="text" ng-model="$ctrl.exon.id1" placeholder="ENSE00001678826">
+								</md-input-container>
+								<md-input-container>
+									<label>EnsembleID 3' end Exon </label>
+									<input type="text" ng-model="$ctrl.exon.id2" placeholder="ENSE00000991541">
+								</md-input-container>
+								<md-input-container>
+									<label>Cell line</label>
+									<input type="text" ng-model="$ctrl.exon.line" placeholder="CCLE_384">
+								</md-input-container>
+								<div>
+									<md-input-container>
+										<label class="md-caption">Strand 5' end exon</label>
+										<br></br>
+										<md-radio-group ng-model="$ctrl.exon.strand1" layout="row">
+											<md-radio-button value="+">+</md-radio-button>
+											<md-radio-button value="-">-</md-radio-button>
+											<md-radio-button value=".*">Any</md-radio-button>
+										</md-radio-group>
+									</md-input-container>
+								</div>
+								<div>
+									<md-input-container>
+										<label class="md-caption">Strand 3' end exon</label>
+										<br></br>
+										<md-radio-group ng-model="$ctrl.exon.strand2" layout="row">
+											<md-radio-button value="+">+</md-radio-button>
+											<md-radio-button value="-">-</md-radio-button>
+											<md-radio-button value=".*">Any</md-radio-button>
+										</md-radio-group>
+									</md-input-container>
+								</div>
+							</div>
+							
+							
+						</md-content>
+					</md-tab>
+					<md-tab label="transcript" md-on-select="$ctrl.onTabChanges(4)" flex layout-fill>
 							<md-content class="md-padding">
-								<md-radio-group ng-model="$ctrl.gene.query_type" layout="row" ng-change="$ctrl.showSelectG()">
+								<md-radio-group ng-model="$ctrl.transcript.query_type" layout="row" ng-change="$ctrl.showSelectT()">
 									<md-radio-button value="single">Single gene</md-radio-button>
 									<md-radio-button value="pair">Pair</md-radio-button>
 								</md-radio-group>
 								<br>
-								<div id="toggle_single_gene" class="toggable">
-									<!--<md-input-container>
-										<label>Symbol</label>
-										<input type="text" ng-model="$ctrl.gene.symbol" placeholder="Insert gene symbol">
-									</md-input-container>
+								<div id="toggle_single_transcript" class="toggable">
 									<md-input-container>
-										<label>Ensemble ID</label>
-										<input type="text" ng-model="$ctrl.gene.id" placeholder="Insert gene ID">
-									</md-input-container>-->
-									<md-input-container>
-										<label>Symbol or EnsembleID</label>
-										<input type="text" ng-model="$ctrl.gene.input1" placeholder="DHRS1 or ENSG00000157379">
+										<label>Transcipt EnsID</label>
+										<input type="text" ng-model="$ctrl.transcript.id1" placeholder="ENST00000371998">
 									</md-input-container>
+
+									<md-input-container>
+										<label>Position</label>
+										<input type="text" ng-model="$ctrl.transcript.position1" placeholder="3965">
+									</md-input-container>
+
 									<md-input-container>
 										<label>Cell line</label>
-										<input type="text" ng-model="$ctrl.gene.line" placeholder="Insert cell line">
+										<input type="text" ng-model="$ctrl.transcript.line" placeholder="CCLE_384">
 									</md-input-container>
 									<div>
 										<md-input-container>
 											<label class="md-caption">Fusion partner</label>
 											<br></br>
-											<md-radio-group ng-model="$ctrl.gene.end" layout="row">
+											<md-radio-group ng-model="$ctrl.transcript.end" layout="row">
 												<md-radio-button value="5end">5' end</md-radio-button>
 												<md-radio-button value="3end">3' end</md-radio-button>
 												<md-radio-button value=".*">Any</md-radio-button>
 											</md-radio-group>
 										</md-input-container>
 									</div>
-								</div>
-								<div id="toggle_pair_gene" class="toggable">
-									<md-input-container>
-										<label>Symbol or EnsembleID 5'end gene</label>
-										<input type="text" ng-model="$ctrl.gene.input1" placeholder="DHRS1 or ENSG00000157379">
-									</md-input-container>
-									<md-input-container>
-										<label>Symbol or EnsembleID 3'end gene</label>
-										<input type="text" ng-model="$ctrl.gene.input2" placeholder="RABGGTA or ENSG00000100949">
-									</md-input-container>
-									<md-input-container>
-										<label>Cell line</label>
-										<input type="text" ng-model="$ctrl.gene.line" placeholder="CCLE_384">
-									</md-input-container>
-								</div>
-							</md-content>
-						</md-tab>
-						<md-tab label="exon" md-on-select="$ctrl.onTabChanges(3)">
-							<md-content class="md-padding">
-								<md-radio-group ng-model="$ctrl.exon.query_type" layout="row" ng-change="$ctrl.showSelectE()">
-									<md-radio-button value="single">Single gene</md-radio-button>
-									<md-radio-button value="pair">Pair</md-radio-button>
-								</md-radio-group>
-								<br>
-								<div id="toggle_single_exon" class="toggable">
-									<md-input-container>
-										<label>Exon EnsembleID</label>
-										<input type="text" ng-model="$ctrl.exon.id1" placeholder="ENSE00001678826">
-									</md-input-container>
-									<md-input-container>
-										<label>Cell line</label>
-										<input type="text" ng-model="$ctrl.exon.line" placeholder="CCLE_384">
-									</md-input-container>
 									<div>
 										<md-input-container>
 											<label class="md-caption">Strand</label>
 											<br></br>
-											<md-radio-group ng-model="$ctrl.exon.strand1" layout="row">
+											<md-radio-group ng-model="$ctrl.transcript.strand1" layout="row">
+												<md-radio-button value="+">+</md-radio-button>
+												<md-radio-button value="-">-</md-radio-button>
+												<md-radio-button value=".*">Any</md-radio-button>
+											</md-radio-group>
+										</md-input-container>
+									</div>
+								</div>
+								<div id="toggle_pair_transcript" class="toggable">
+									<md-input-container>
+										<label>5' end Transcipt EnsID</label>
+										<input type="text" ng-model="$ctrl.transcript.id1" placeholder="ENST00000371998">
+									</md-input-container>
+
+									<md-input-container>
+										<label>5'end Transcript Position</label>
+										<input type="text" ng-model="$ctrl.transcript.position1" placeholder="3965">
+									</md-input-container>
+									<br>
+									<md-input-container>
+										<label>3' end Transcipt EnsID</label>
+										<input type="text" ng-model="$ctrl.transcript.id2" placeholder="ENST00000302326">
+									</md-input-container>
+
+									<md-input-container>
+										<label>3'end Transcript Position</label>
+										<input type="text" ng-model="$ctrl.transcript.position2" placeholder="2555">
+									</md-input-container>
+									<div>
+										<md-input-container>
+											<label class="md-caption">Strand 5' end transcript</label>
+											<br></br>
+											<md-radio-group ng-model="$ctrl.transcript.strand1" layout="row">
 												<md-radio-button value="+">+</md-radio-button>
 												<md-radio-button value="-">-</md-radio-button>
 												<md-radio-button value=".*">Any</md-radio-button>
@@ -118,210 +241,87 @@
 									</div>
 									<div>
 										<md-input-container>
-											<label class="md-caption">Fusion partner</label>
+											<label class="md-caption">Strand 3' end transcript</label>
 											<br></br>
-											<md-radio-group ng-model="$ctrl.exon.end" layout="row">
-												<md-radio-button value="5end">5' end</md-radio-button>
-												<md-radio-button value="3end">3' end</md-radio-button>
+											<md-radio-group ng-model="$ctrl.transcript.strand2" layout="row">
+												<md-radio-button value="+">+</md-radio-button>
+												<md-radio-button value="-">-</md-radio-button>
 												<md-radio-button value=".*">Any</md-radio-button>
 											</md-radio-group>
 										</md-input-container>
 									</div>
-								</div>
-								<div id="toggle_pair_exon" class="toggable">
-									<md-input-container>
-										<label>EnsembleID 5' end Exon </label>
-										<input type="text" ng-model="$ctrl.exon.id1" placeholder="ENSE00001678826">
-									</md-input-container>
-									<md-input-container>
-										<label>EnsembleID 3' end Exon </label>
-										<input type="text" ng-model="$ctrl.exon.id2" placeholder="ENSE00000991541">
-									</md-input-container>
+									<br>
 									<md-input-container>
 										<label>Cell line</label>
-										<input type="text" ng-model="$ctrl.exon.line" placeholder="CCLE_384">
+										<input type="text" ng-model="$ctrl.transcript.line" placeholder="CCLE_384">
 									</md-input-container>
-									<div>
-										<md-input-container>
-											<label class="md-caption">Strand 5' end exon</label>
-											<br></br>
-											<md-radio-group ng-model="$ctrl.exon.strand1" layout="row">
-												<md-radio-button value="+">+</md-radio-button>
-												<md-radio-button value="-">-</md-radio-button>
-												<md-radio-button value=".*">Any</md-radio-button>
-											</md-radio-group>
-										</md-input-container>
-									</div>
-									<div>
-										<md-input-container>
-											<label class="md-caption">Strand 3' end exon</label>
-											<br></br>
-											<md-radio-group ng-model="$ctrl.exon.strand2" layout="row">
-												<md-radio-button value="+">+</md-radio-button>
-												<md-radio-button value="-">-</md-radio-button>
-												<md-radio-button value=".*">Any</md-radio-button>
-											</md-radio-group>
-										</md-input-container>
-									</div>
 								</div>
 							</md-content>
-							<md-tab label="transcript" md-on-select="$ctrl.onTabChanges(4)">
-								<md-content class="md-padding">
-									<md-radio-group ng-model="$ctrl.transcript.query_type" layout="row" ng-change="$ctrl.showSelectT()">
-										<md-radio-button value="single">Single gene</md-radio-button>
-										<md-radio-button value="pair">Pair</md-radio-button>
-									</md-radio-group>
-									<br>
-									<div id="toggle_single_transcript" class="toggable">
-										<md-input-container>
-											<label>Transcipt EnsID</label>
-											<input type="text" ng-model="$ctrl.transcript.id1" placeholder="ENST00000371998">
-										</md-input-container>
+					</md-tab>
+					<md-tab label="fusion" md-on-select="$ctrl.onTabChanges(5)" flex layout-fill>
+						<md-content class="md-padding">
+							<md-input-container>
+								<label>Cell line</label>
+								<input type="text" ng-model="$ctrl.fusion.line" placeholder="CCLE_384">
+							</md-input-container>
+							<md-input-container>
+								<label class="md-caption">Fusion description</label>
+								<md-select ng-model="$ctrl.fusion.description">
+									<md-option ng-repeat="description in $ctrl.descriptions" ng-value="description">
+										{{description}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container>
+								<label class="md-caption">Predicted effect</label>
+								<br></br>
+								<md-radio-group ng-model="$ctrl.fusion.predicted_effect" layout="row" ng-change="$ctrl.showSelect()">
+									<md-radio-button value=".*">Any</md-radio-button>
+									<md-radio-button value="in-frame">In frame</md-radio-button>
+									<md-radio-button value="out-of-frame">Out of frame</md-radio-button>
+									<md-radio-button value="pair">5' end gene - 3' end gene</md-radio-button>
+								</md-radio-group>
+							</md-input-container>
+						</md-content>
+						<div id="toggle" class="toggable">
+							<md-input-container>
+								<label class="md-caption">Predicted effect for 5' end gene</label>
+								<md-select ng-model="$ctrl.fusion.predicted_effect_gene_1">
+									<md-option ng-repeat="effect in $ctrl.effects" ng-value="effect">
+										{{effect}}
+									</md-option>
+								</md-select>
+							</md-input-container>
 
-										<md-input-container>
-											<label>Position</label>
-											<input type="text" ng-model="$ctrl.transcript.position1" placeholder="3965">
-										</md-input-container>
+							<md-input-container>
+								<label class="md-caption">Predicted effect for 5' end gene</label>
+								<md-select ng-model="$ctrl.fusion.predicted_effect_gene_2">
+									<md-option ng-repeat="effect in $ctrl.effects" ng-value="effect">
+										{{effect}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+						<div>
+							<md-input-container>
+								<label>Fusion method</label>
+								<md-select ng-model="$ctrl.fusion.method">
+									<md-option ng-repeat="method in $ctrl.methods" ng-value="method">
+										{{method}}
+									</md-option>
+								</md-select>
+							</md-input-container>
 
-										<md-input-container>
-											<label>Cell line</label>
-											<input type="text" ng-model="$ctrl.transcript.line" placeholder="CCLE_384">
-										</md-input-container>
-										<div>
-											<md-input-container>
-												<label class="md-caption">Fusion partner</label>
-												<br></br>
-												<md-radio-group ng-model="$ctrl.transcript.end" layout="row">
-													<md-radio-button value="5end">5' end</md-radio-button>
-													<md-radio-button value="3end">3' end</md-radio-button>
-													<md-radio-button value=".*">Any</md-radio-button>
-												</md-radio-group>
-											</md-input-container>
-										</div>
-										<div>
-											<md-input-container>
-												<label class="md-caption">Strand</label>
-												<br></br>
-												<md-radio-group ng-model="$ctrl.transcript.strand1" layout="row">
-													<md-radio-button value="+">+</md-radio-button>
-													<md-radio-button value="-">-</md-radio-button>
-													<md-radio-button value=".*">Any</md-radio-button>
-												</md-radio-group>
-											</md-input-container>
-										</div>
-									</div>
-									<div id="toggle_pair_transcript" class="toggable">
-										<md-input-container>
-											<label>5' end Transcipt EnsID</label>
-											<input type="text" ng-model="$ctrl.transcript.id1" placeholder="ENST00000371998">
-										</md-input-container>
+						</div>
 
-										<md-input-container>
-											<label>5'end Transcript Position</label>
-											<input type="text" ng-model="$ctrl.transcript.position1" placeholder="3965">
-										</md-input-container>
-										<br>
-										<md-input-container>
-											<label>3' end Transcipt EnsID</label>
-											<input type="text" ng-model="$ctrl.transcript.id2" placeholder="ENST00000302326">
-										</md-input-container>
+					</md-tab>
+						{{tab.title}}
+				</md-tabs>	
 
-										<md-input-container>
-											<label>3'end Transcript Position</label>
-											<input type="text" ng-model="$ctrl.transcript.position2" placeholder="2555">
-										</md-input-container>
-										<div>
-											<md-input-container>
-												<label class="md-caption">Strand 5' end transcript</label>
-												<br></br>
-												<md-radio-group ng-model="$ctrl.transcript.strand1" layout="row">
-													<md-radio-button value="+">+</md-radio-button>
-													<md-radio-button value="-">-</md-radio-button>
-													<md-radio-button value=".*">Any</md-radio-button>
-												</md-radio-group>
-											</md-input-container>
-										</div>
-										<div>
-											<md-input-container>
-												<label class="md-caption">Strand 3' end transcript</label>
-												<br></br>
-												<md-radio-group ng-model="$ctrl.transcript.strand2" layout="row">
-													<md-radio-button value="+">+</md-radio-button>
-													<md-radio-button value="-">-</md-radio-button>
-													<md-radio-button value=".*">Any</md-radio-button>
-												</md-radio-group>
-											</md-input-container>
-										</div>
-										<br>
-										<md-input-container>
-											<label>Cell line</label>
-											<input type="text" ng-model="$ctrl.transcript.line" placeholder="CCLE_384">
-										</md-input-container>
-									</div>
-								</md-content>
-								<md-tab label="fusion" md-on-select="$ctrl.onTabChanges(5)">
-									<md-content class="md-padding">
-										<md-input-container>
-											<label>Cell line</label>
-											<input type="text" ng-model="$ctrl.fusion.line" placeholder="CCLE_384">
-										</md-input-container>
-										<md-input-container>
-											<label class="md-caption">Fusion description</label>
-											<md-select ng-model="$ctrl.fusion.description">
-												<md-option ng-repeat="description in $ctrl.descriptions" ng-value="description">
-													{{description}}
-												</md-option>
-											</md-select>
-										</md-input-container>
-										<md-input-container>
-											<label class="md-caption">Predicted effect</label>
-											<br></br>
-											<md-radio-group ng-model="$ctrl.fusion.predicted_effect" layout="row" ng-change="$ctrl.showSelect()">
-												<md-radio-button value=".*">Any</md-radio-button>
-												<md-radio-button value="in-frame">In frame</md-radio-button>
-												<md-radio-button value="out-of-frame">Out of frame</md-radio-button>
-												<md-radio-button value="pair">5' end gene - 3' end gene</md-radio-button>
-											</md-radio-group>
-										</md-input-container>
-									</md-content>
-									<div id="toggle" class="toggable">
-										<md-input-container>
-											<label class="md-caption">Predicted effect for 5' end gene</label>
-											<md-select ng-model="$ctrl.fusion.predicted_effect_gene_1">
-												<md-option ng-repeat="effect in $ctrl.effects" ng-value="effect">
-													{{effect}}
-												</md-option>
-											</md-select>
-										</md-input-container>
-
-										<md-input-container>
-											<label class="md-caption">Predicted effect for 5' end gene</label>
-											<md-select ng-model="$ctrl.fusion.predicted_effect_gene_2">
-												<md-option ng-repeat="effect in $ctrl.effects" ng-value="effect">
-													{{effect}}
-												</md-option>
-											</md-select>
-										</md-input-container>
-									</div>
-									<div>
-										<md-input-container>
-											<label>Fusion method</label>
-											<md-select ng-model="$ctrl.fusion.method">
-												<md-option ng-repeat="method in $ctrl.methods" ng-value="method">
-													{{method}}
-												</md-option>
-											</md-select>
-										</md-input-container>
-
-									</div>
-				</md-content>
-				</md-tab>
-				{{tab.title}}
-				</md-tabs>
-			</md-content>
 			</md-content>
 		</div>
-		<md-card-actions layout="row" layout-align="end center">
-			<md-button aria-label="button-label" ng-click="$ctrl.callQuery()">Search</md-card-actions>
-		</md-card-actions>
+	</md-card-content>
+	<md-card-actions layout="row" layout-align="end center">			
+		<md-button aria-label="button-label" ng-click="$ctrl.callQuery()">Search</md-card-actions>
+	</md-card-actions>
 </md-card>

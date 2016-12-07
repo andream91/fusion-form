@@ -137,5 +137,9 @@ span.name {
 }
 
 .banner {
-  max-height: 120px;
+  max-height: 150px;
+}
+
+.title{
+  font-size: 20pt;
 }
