@@ -20,7 +20,7 @@ class FusionFormService {
                 data: {
                     "statements": [
                         {
-                            "statement": "match (c:CellLine)-[:HAPPEN]->(f:Fusion) where c.cell_line=~'CCLE_095' with c,f order by ID(f) skip {skip} limit {limit} match (f)-[:AT_CHROMOSOME]->(ch:Chromosome),(g1:Gene)-[:HAD]->(f)-[:WITH]->(g2:Gene) where ch.id=~'.*' and ((f.fusion_point_1>='0' and f.fusion_point_1<='999999999') or (f.fusion_point_2>='0' and f.fusion_point_2<='999999999'))  optional match (f)-[:WITH_TRANSCRIPT]->(t1:Transcript)-[:IN_COUPLE]->(co:Couple)-[:WITH_OTHER_TRANSCRIPT]->(t2:Transcript) optional match (f)-[:AT_EXON]->(e1:Exon)-[:IN_GENE]->(g1),(f)-[:AT_EXON]->(e2:Exon)-[:IN_GENE]->(g2) optional match (t1)-[:WITH_PROTEIN]->(p:Protein), (t2)-[:WITH_PROTEIN]->(p) return {cell: c, fusion: f,chromosome: ch, gene1: g1, gene2: g2, transcript1: t1, transcript2: t2, exon1:e1, exon2: e2, protein: p}, count(distinct(f)) as total",
+                            "statement": "match (c:CellLine)-[:HAPPEN]->(f:Fusion) where c.cell_line=~'CCLE_095' with c,f order by ID(f) match (g1:Gene)-[:HAD]->(f)-[:WITH]->(g2:Gene)  where (g1.symbol=~'KMT2A' and g1.gene_id=~'.*' and g1.fusion_partner='5end') and (g2.symbol=~'.*' and g2.gene_id=~'.*' and g2.fusion_partner='3end') optional match (f)-[:AT_CHROMOSOME]->(ch1:Chromosome)-[:OF_GENE]->(g1),(f)-[:AT_CHROMOSOME]->(ch2:Chromosome)-[:OF_GENE]->(g2) optional match (f)-[:WITH_TRANSCRIPT]->(t1:Transcript)-[:IN_COUPLE]->(co:Couple)-[:WITH_OTHER_TRANSCRIPT]->(t2:Transcript),(f)-[:WITH_TRANSCRIPT]->(t2),(co)-[:IN_FUSION]->(f) optional match (f)-[:AT_EXON]->(e1:Exon)-[:IN_GENE]->(g1),(f)-[:AT_EXON]->(e2:Exon)-[:IN_GENE]->(g2) optional match (t1)-[:WITH_PROTEIN]->(p:Protein), (t2)-[:WITH_PROTEIN]->(p),(p)-[:P_IN_FUSION]->(f) with f,co,c,ch1,ch2,g1,g2,e1,e2,collect([p]) as proteins,collect([t1,t2]) as couple_t return {cell: c, fusion: f,chromosome1:ch1,chromosome2:ch2, gene1: g1, gene2: g2, exon1: e1, exon2:e2, protein:proteins, couple_t:couple_t}",
                             "parameters" : {
                                 'skip': query.skip,
                                 'limit': query.limit
@@ -45,9 +45,9 @@ class FusionFormService {
                     gene1: response.data.results[0].data[idx].row[0].gene1,
                     gene2: response.data.results[0].data[idx].row[0].gene2,
                     fusion: response.data.results[0].data[idx].row[0].fusion,
-                    chromosome: response.data.results[0].data[idx].row[0].chromosome,
-                    transcript1: response.data.results[0].data[idx].row[0].transcript1,
-                    transcript2: response.data.results[0].data[idx].row[0].transcript2,
+                    chromosome1: response.data.results[0].data[idx].row[0].chromosome1,
+                    chromosome2: response.data.results[0].data[idx].row[0].chromosome2,
+                    couple_t: response.data.results[0].data[idx].row[0].couple_t,
                     exon1: response.data.results[0].data[idx].row[0].exon1,
                     exon2: response.data.results[0].data[idx].row[0].exon2,
                     protein: response.data.results[0].data[idx].row[0].protein

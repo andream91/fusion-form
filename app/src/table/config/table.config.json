@@ -2,6 +2,8 @@
     "headers": [
         "Gene pair symbols",
         "Gene pair EnsIDs",
+        "Exon pair",
+        "Chromosomes",
         "Description",
         "Counts of common mapping reads",
         "Spanning pairs",	
@@ -16,8 +18,10 @@
         "Predicted fused proteins"
     ],
     "row": [
-        "<td md-cell><p>{{el.gene1.symbol}} - {{el.gene2.symbol}}</p></td>",
-        "<td md-cell><p>{{el.gene1.gene_id}} - {{el.gene2.gene_id}}</p></td>",
+        "<td md-cell><p>{{el.gene1.symbol}}<br>{{el.gene2.symbol}}</p></td>",
+        "<td md-cell><p>{{el.gene1.gene_id}}<br>{{el.gene2.gene_id}}</p></td>",
+        "<td md-cell><p>{{el.exon1.exon_id}}<br>{{el.exon2.exon_id}}</p></td>",
+        "<td md-cell><p>{{el.chromosome1.id}}:{{el.chromosome1.strand}}<br>{{el.chromosome2.id}}:{{el.chromosome2.strand}}</td>",
         "<td md-cell><p>{{el.fusion.description}}</p></td>",
         "<td md-cell><p>{{el.fusion.common_mapping_reads}}</p></td>",
         "<td md-cell><p>{{el.fusion.spanning_pairs}}</p></td>",
@@ -28,7 +32,7 @@
         "<td md-cell><p>{{el.fusion.fusion_point_2}}</p></td>",
         "<td md-cell><p>{{el.fusion.fusion_sequence}}</p></td>",
         "<td md-cell><p>{{el.fusion.predicted_effect}}</p></td>",
-        "<td md-cell><p>{{el.transcript1.transcript_id}}:{{el.transcript1.position}}/{{el.transcript2.transcript_id}}:{{el.transcript2.position}}</p></td>",
-        "<td md-cell><p>{{el.protein.id}}</p></td>"
+        "<td md-cell><p><ng-repeat ng-repeat='cp in el.couple_t track by $index'>{{cp[0].transcript_id}}:{{cp[0].position}}/{{cp[1].transcript_id}}:{{cp[1].position}}<br></ng-repeat></p></td>",
+        "<td md-cell><p><ng-repeat ng-repeat='prot in el.protein track by $index'>{{prot[0].id}}<br></ng-repeat></p></td>"
     ]
 }

@@ -21,9 +21,9 @@ class TableDataController {
             'gene1': 1,
             'gene2': 1,
             'fusion': 1,
-            'chromosome': 1,
-            'transcript1': 1,
-            'transcript2': 1,
+            'chromosome1': 1,
+            'chromosome2': 1,
+            'couple_t': 1,
             'exon1': 1,
             'exon2': 1,
             'protein': 1
