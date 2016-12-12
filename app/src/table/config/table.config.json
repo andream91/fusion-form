@@ -1,5 +1,6 @@
 {
     "headers": [
+        "Cell line",
         "Gene pair symbols",
         "Gene pair EnsIDs",
         "Exon pair",
@@ -18,6 +19,7 @@
         "Predicted fused proteins"
     ],
     "row": [
+        "<td md-cell><p>{{el.cell_line.cell_line}}</p></td>",
         "<td md-cell><p>{{el.gene1.symbol}}<br>{{el.gene2.symbol}}</p></td>",
         "<td md-cell><p>{{el.gene1.gene_id}}<br>{{el.gene2.gene_id}}</p></td>",
         "<td md-cell><p>{{el.exon1.exon_id}}<br>{{el.exon2.exon_id}}</p></td>",
@@ -32,7 +34,43 @@
         "<td md-cell><p>{{el.fusion.fusion_point_2}}</p></td>",
         "<td md-cell><p>{{el.fusion.fusion_sequence}}</p></td>",
         "<td md-cell><p>{{el.fusion.predicted_effect}}</p></td>",
-        "<td md-cell><p><ng-repeat ng-repeat='cp in el.couple_t track by $index'>{{cp[0].transcript_id}}:{{cp[0].position}}/{{cp[1].transcript_id}}:{{cp[1].position}}<br></ng-repeat></p></td>",
-        "<td md-cell><p><ng-repeat ng-repeat='prot in el.protein track by $index'>{{prot[0].id}}<br></ng-repeat></p></td>"
+        "<td md-cell><p><ng-repeat ng-repeat='cp in el.couple_tp track by $index'>{{cp.t1.transcript_id}}:{{cp.t1.position}}/{{cp.t2.transcript_id}}:{{cp.t2.position}}<br></ng-repeat></p></td>",
+        "<td md-cell><p><ng-repeat ng-repeat='prot in el.couple_tp track by $index'>{{prot.p.id}}<br></ng-repeat></p></td>"
+    ],
+    "queries": [
+        {
+            "type": "gene",
+            "query": [
+                "match (c:CellLine)-[:HAPPEN]->(f:Fusion) where c.cell_line=~'CCLE_095' with c,f order by ID(f) match (g1:Gene)-[:HAD]->(f)-[:WITH]->(g2:Gene) ",
+                "where (g1.symbol=~{gene1_symbol} and g1.gene_id=~'.*' and g1.fusion_partner='5end') and (g2.symbol=~'.*' and g2.gene_id=~'.*' and g2.fusion_partner='3end') ",
+                "with c,f,g1,g2 ",
+                "match (f)-[:AT_CHROMOSOME]->(ch1:Chromosome)-[:OF_GENE]->(g1) ",
+                "with c,f,g1,g2,ch1 ",
+                "match (f)-[:AT_CHROMOSOME]->(ch2:Chromosome)-[:OF_GENE]->(g2) ",
+                "with c,f,g1,g2,ch1,ch2 ",
+                "optional match (t1:Transcript)-[:IN_COUPLE]->(co:Couple)-[:WITH_OTHER_TRANSCRIPT]->(t2:Transcript),(co)-[:WITH_PROTEIN]->(p:Protein),(f)-[:WITH_TRANS_COUPLE]->(co) ",
+                "with c,f,g1,g2,ch1,ch2,collect({t1:t1,t2:t2,co:co,p:p}) as couple_tp ",
+                "optional match (f)-[:AT_EXON]->(e1:Exon)-[:IN_GENE]->(g1) ",
+                "with c,f,g1,g2,ch1,ch2,couple_tp,e1 ",
+                "optional match (f)-[:AT_EXON]->(e2:Exon)-[:IN_GENE]->(g2) ",
+                "with count(f) as total ",
+                "match (c:CellLine)-[:HAPPEN]->(f:Fusion) where c.cell_line=~'CCLE_095' ",
+                "with total,c,f order by ID(f) skip {skip} limit {limit}",
+                "match (g1:Gene)-[:HAD]->(f)-[:WITH]->(g2:Gene) ",
+                "where (g1.symbol=~'.*' and g1.gene_id=~'.*' and g1.fusion_partner='5end') and (g2.symbol=~'.*' and g2.gene_id=~'.*' and g2.fusion_partner='3end') ",
+                "with total,c,f,g1,g2 ",
+                "match (f)-[:AT_CHROMOSOME]->(ch1:Chromosome)-[:OF_GENE]->(g1) ",
+                "with total,c,f,g1,g2,ch1 ",
+                "match (f)-[:AT_CHROMOSOME]->(ch2:Chromosome)-[:OF_GENE]->(g2) ",
+                "with total,c,f,g1,g2,ch1,ch2 ",
+                "optional match (t1:Transcript)-[:IN_COUPLE]->(co:Couple)-[:WITH_OTHER_TRANSCRIPT]->(t2:Transcript),(co)-[:WITH_PROTEIN]->(p:Protein),(f)-[:WITH_TRANS_COUPLE]->(co) ",
+                "with total,c,f,g1,g2,ch1,ch2,collect({t1:t1,t2:t2,co:co,p:p}) as couple_tp ",
+                "optional match (f)-[:AT_EXON]->(e1:Exon)-[:IN_GENE]->(g1) ",
+                "with total,c,f,g1,g2,ch1,ch2,couple_tp,e1 ",
+                "optional match (f)-[:AT_EXON]->(e2:Exon)-[:IN_GENE]->(g2) ",
+                "with total,c,f,g1,g2,ch1,ch2,couple_tp,e1,e2 ",
+                "return {cell_line: c,fusion: f,gene1: g1,gene2: g2, chromosome1: ch1,chromosome2: ch2,couple_tp: couple_tp, exon1: e1, exon2: e2, total: total}"
+            ]
+        }
     ]
 }

@@ -15,18 +15,19 @@ class TableDataController {
 
         self.query = {
             //'file': $routeParams.filename,
+            'cell_line': ".*",
             'limit': 5,
             'page': 1,
             'skip': 0,
-            'gene1': 1,
+            'gene1_symbol': ".*",
             'gene2': 1,
             'fusion': 1,
             'chromosome1': 1,
             'chromosome2': 1,
-            'couple_t': 1,
+            'transcript1': 1,
+            'transcipt2': 1,
             'exon1': 1,
-            'exon2': 1,
-            'protein': 1
+            'exon2': 1
         };
 
 
@@ -40,6 +41,10 @@ class TableDataController {
                 console.log("Loaded tableData configuration file");
                 self.config = response.data;
 
+                self.promise = FusionFormService.runQuery(self.query, self.config).then(function (data) {
+                    self.processDataForVisualization(data);
+                }).catch(function () { console.log('Some error occurred') });
+
                 console.log(self.config);
             },
 
@@ -50,33 +55,31 @@ class TableDataController {
             );
 
 
-        self.promise = FusionFormService.runQuery(self.query).then(function(data) {
-            self.processDataForVisualization(data);
-        }).catch(function () { console.log('Some error occurred') });
+
 
         self.getElems = function () {
             console.log('Getting elements');
             self.query.skip = self.query.limit * (self.query.page - 1);
 
-            self.promise = FusionFormService.runQuery(self.query).then(function(data) {
-            self.processDataForVisualization(data);
-        }).catch(function () { console.log('Some error occurred') });
+            self.promise = FusionFormService.runQuery(self.query, self.config).then(function (data) {
+                self.processDataForVisualization(data);
+            }).catch(function () { console.log('Some error occurred') });
         };
 
-        self.processDataForVisualization = function(data) {
+        self.processDataForVisualization = function (data) {
             self.data = data;
 
             self.template = self.config.row.join("\n");
 
 
-/*
-            for( var i = 0; i < data.variants.length; i++) {
-                self.rows.push({
-                    "data": self.data.variants[i],
-                    "row": $interpolate(template)(self.data.variants[i])
-                });
-            }
-*/
+            /*
+                        for( var i = 0; i < data.variants.length; i++) {
+                            self.rows.push({
+                                "data": self.data.variants[i],
+                                "row": $interpolate(template)(self.data.variants[i])
+                            });
+                        }
+            */
             console.log(self.data)
 
         }
