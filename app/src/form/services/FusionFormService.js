@@ -2,10 +2,10 @@ class FusionFormService {
     constructor($http) {
         var self = this;
         self.$http = $http;
-        
+
         self.credentials = btoa("neo4j:password");
 
-        self.runQuery = function (query,config) { // una funzione per ogni caso o 5 return con switch (su currentTab)
+        self.runQuery = function (query, config) { // una funzione per ogni caso o 5 return con switch (su currentTab)
             //console.log(currentTab);
             //SOSTITUIRE CAMPI VUOTI CON .*
             return $http({
@@ -21,13 +21,12 @@ class FusionFormService {
                     "statements": [
                         {
 
-                            "statement": config.queries[0].query.join(" "),
-                    
-                            "parameters" : {
-                                'skip': query.skip,
-                                'limit': query.limit,
-                                'gene1_symbol' : query.gene1_symbol
+                            "statement": config.queries["exon"]["exon_specified_partner_specified_strand"].join(" "),
+
+                            "parameters": {
+                                "query": query
                             }
+
                         }
                     ]
                 }
