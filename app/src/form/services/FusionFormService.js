@@ -21,7 +21,7 @@ class FusionFormService {
                     "statements": [
                         {
 
-                            "statement": config.queries["exon"]["exon_specified_partner_specified_strand"].join(" "),
+                            "statement": config.queries["fusion"]["fusion_predicted_effect_1_defined_2_defined"].join(" "),
 
                             "parameters": {
                                 "query": query
